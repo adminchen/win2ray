@@ -1,0 +1,47 @@
+import fonts.fontAwesome;
+import win.ui;
+/*DSG{{*/
+var winform = win.form(text="aardio form";right=759;bottom=469;bgcolor=16777215)
+winform.add(
+btnAardio={cls="plus";text="aardio 桌面软件快速开发";left=47;top=175;right=298;bottom=217;align="left";color=3947580;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-27;name='FontAwesome');padding={left=18}};iconText='\uF17A';notify=1;textPadding={left=50};z=3};
+btnGitHub={cls="plus";text="github 网速优化";left=45;top=101;right=281;bottom=143;align="left";color=3947580;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-27;name='FontAwesome');padding={left=18}};iconText='\uF09B';notify=1;textPadding={left=50};z=2};
+btnYoutube={cls="plus";text="youtube 视频下载工具";left=44;top=26;right=280;bottom=68;align="left";color=3947580;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-27;name='FontAwesome');padding={left=18}};iconText='\uF167';notify=1;textPadding={left=50};z=1}
+)
+/*}}*/
+
+import style;
+winform.btnYoutube.skin(style.plainButton)
+
+var frmYoutube;
+winform.btnYoutube.oncommand = function(id,event){
+	if(frmYoutube&&win.isWindow(frmYoutube.hwnd)){
+		if(win.isIconic(frmYoutube.hwnd)){
+			frmYoutube.show(9/*_SW_RESTORE*/);	
+		}
+		
+		frmYoutube.show();
+		return;
+	}
+	
+	frmYoutube = winform.loadForm("\forms\main\tools\youtube.aardio");
+	frmYoutube.show();
+}
+
+import process;
+winform.btnGitHub.skin(style.plainButton)
+winform.btnGitHub.oncommand = function(id,event){
+    if(_STUDIO_INVOKED){
+    	winform.msgboxErr("请在发布后运行此功能");
+    	return;
+    }
+    
+	process.execute(io._exepath,"/github","runas");
+}
+
+winform.btnAardio.skin(style.plainButton)
+winform.btnAardio.oncommand = function(id,event){
+	process.openUrl("http://www.aardio.com")
+}
+
+winform.show();
+win.loopMessage();
